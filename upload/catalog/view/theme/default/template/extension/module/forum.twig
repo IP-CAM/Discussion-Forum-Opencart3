@@ -1,0 +1,55 @@
+<div class="buttons clearfix">
+<div class="row">
+<div class="col-sm-6 text-left"><h3 id="forumid"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;&nbsp;{{ heading_title }}</h3></div>
+<div class="col-sm-6 text-right"><h3 style="font-size: 17px;padding: 10px;"><a href="{{ base }}index.php?route=extension/module/forum/addTopic">Start Discussion</a></h3></div>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12"> 
+	<div class="table-responsive">
+
+	<table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Topics</th>
+          <th>Posted On</th>
+          <th>Replies</th>
+          <th>Views</th>
+        </tr>
+      </thead>
+      <tbody>	  
+	  {% if forumdata %}
+		  {% for formdatasingle in forumdata %}        
+        <tr>
+          <td><a href="{{ base }}index.php?route=extension/module/forum/getForum&forum_id={{ formdatasingle.forum_id }}">{{ formdatasingle.name }}</a><div class="author">
+		  {% if formdatasingle.username %}
+			  by {{ formdatasingle.username }}
+		  {% else %}
+			by admin
+		  {% endif %}		  
+		  </div></td>
+          <td>{{ formdatasingle.date|date("M d, Y h:i a") }}</td>
+          <td>{{ formdatasingle.reply }}</td>
+          <td>{{ formdatasingle.views }}</td>
+        </tr>
+        {% endfor %}
+	  {% else %}
+	  	<tr><td colspan="4" style="text-align:center;">No Results Found!</td></tr>
+	  {% endif %}
+      </tbody>
+    </table>
+  </div>
+  </div>
+  </div>
+<style>
+#forumid .fa {
+	font-size:21px;
+}
+#forumid {
+	color: #fff;
+    background: #337ab7;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+</style>

@@ -1,0 +1,36 @@
+/* CSS Document */
+table#forum{
+	border-collapse:collapse;
+	border:1px solid #ccc;
+}
+table#forum th {
+	background: none repeat scroll 0 0 #627eb0;
+    padding: 10px;
+    color: #ffffff;
+	border:1px solid #ccc;
+}
+table#forum td {
+	padding: 10px;
+	border:1px solid #ccc;
+}
+#topic {
+	padding:10px 2px 10px 0px;
+}
+#topic a {
+	font-size:14px;
+}
+.author {
+	color: #555;
+    margin: 4px 3px 2px 0px;
+    padding: 2px;
+}
+input[type="submit"] {
+	background: none repeat scroll 0 0 #627eb0;
+    border: 1px solid #ccc;
+    color: #fff;
+    font-weight: bold;
+    padding: 5px;
+}
+textarea {
+	resize: none;
+}

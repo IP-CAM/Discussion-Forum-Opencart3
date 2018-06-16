@@ -1,0 +1,95 @@
+{{ header }}
+<div class="container">
+
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+
+  <div class="row">{{ column_left }}
+
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+
+
+  <div class="container-fluid">
+  
+    <div class="panel panel-default">
+	
+      <div class="panel-heading">
+
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ heading_title }}<span style="float:right;" title="Go back"><a href="{{ base }}index.php?route=extension/module/forum/addTopic" title="Add Topic">Start Discussion</a></span></h3>
+	  {% if success %}
+		<div class="success">{{ success }}</div>
+	  {% endif %}	
+      </div>
+
+      <div class="panel-body">
+
+        
+
+          <div class="table-responsive Flipped">
+
+            <table class="table table-bordered table-hover Contentt">
+			  <thead>
+				<tr>
+				  <th>Topics</th>
+				  <th>Posted On</th>
+				  <th>Replies</th>
+				  <th>Views</th>
+				</tr>
+			  </thead>
+
+		   <tbody>	 
+			  {% if forumdata %}
+			  
+		  {% for formdatasingle in forumdata %}        
+        <tr>
+          <td><a href="{{ base }}index.php?route=extension/module/forum/getForum&forum_id={{ formdatasingle.forum_id }}">{{ formdatasingle.name }}</a><div class="author">
+		  {% if formdatasingle.username %}
+			  by {{ formdatasingle.username }}
+		  {% else %}
+			by admin
+		  {% endif %}		  
+		  </div></td>
+          <td>{{ formdatasingle.date|date("M d, Y h:i a") }}</td>
+          <td>{{ formdatasingle.reply }}</td>
+          <td>{{ formdatasingle.views }}</td>
+        </tr>
+        {% endfor %}
+			  {% else %}
+				<tr><td colspan="4" style="text-align:center;">No Results Found!</td></tr>
+			  {% endif %}		
+		  </tbody>
+
+            </table>
+
+          </div>
+
+        
+		<div class="buttons clearfix">
+			<div class="row">
+
+        <div class="col-sm-6 text-left">{{ pagination }}</div>
+        <div class="col-sm-6 text-right">{{ results }}</div>
+
+			</div>
+		</div>
+
+      </div>
+
+    </div>
+
+  </div>
+        {{ content_bottom }}</div>
+    {{ column_right }}
+
+</div>
+
+{{ footer }} 

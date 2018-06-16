@@ -1,0 +1,168 @@
+{{ header }}
+<div class="container">
+
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+
+  <div class="row">{{ column_left }}
+
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+
+
+  <div class="container-fluid">
+  
+    <div class="panel panel-default">
+	
+      <div class="panel-heading">
+
+        <h3 class="panel-title"><i class="fa fa-list"></i>  {{ heading_title }}<span style="float:right;" title="Go back"><a href="{{ base }}index.php?route=extension/module/forum/addTopic" title="Add Topic">Start Discussion</a></span></h3>
+
+      </div>
+	  	  {% if success %}
+		 <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>
+	  {% endif %}
+
+      <div class="panel-body">
+
+        
+
+          <div class="table-responsive">
+
+  {% for formdatasingle in forumdata %}       
+  <table class="table table-bordered table-hover">
+    <tbody>
+      <tr style="background: #2094c0;color:#fff;">
+        <td><strong><a style="color:#e1e1e1;" href="{% if formdatasingle.customer_id  ==  0 %} {{ base }}index.php?route=extension/module/forum/getForums {% else %} {{ base }}index.php?route=extension/module/forum/getForums&author_id={{ formdatasingle.customer_id_encode }} {% endif %}">
+          {% if formdatasingle.customer_id  ==  0 %} {{ 'Admin' }} {% else %}  {{ formdatasingle.username }} {% endif %}
+          </a>&nbsp;:&nbsp;</strong>  {{ formdatasingle.name }} </td>
+        <td> {{ formdatasingle.date|date("M d, Y h:i a") }} </td>
+      </tr>
+      <tr>
+
+  <td><img style="width:50px; height:50px;" src="image/catalog/admin.png"/> </td>
+  
+  
+		<td>{{ formdatasingle.description }}</td>
+		
+      </tr>
+    </tbody>
+  </table>
+  {% endfor %}
+  
+  {% set j = 1 %}
+  
+  
+  {% for formdatarepsingle in forumreplydata %}
+  <table class="table table-bordered table-hover">
+    <tbody>
+      <tr>
+        <td><strong>#{{ j }} reply on : </strong> {{ formdatarepsingle.name }} by <a href="{{ base }}index.php?route=extension/module/forum/getForums&author_id={{ formdatarepsingle.customer_id_encode }}">{{ formdatarepsingle.username }}</a> </td>
+        <td>{{ formdatarepsingle.date|date("M d, Y h:i a") }} </td>
+      </tr>
+      <tr>
+		<td><img style="width:50px; height:50px;" src="image/catalog/admin.png"/> </td>
+		
+		<td>{{ formdatarepsingle.reply }}</td>
+      </tr>
+    </tbody>
+  </table>
+  {% set j = j + 1 %}
+  
+   {% endfor %}
+  <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form"> 
+  {% if customer_id %}
+		<fieldset>
+
+          <legend>{{ post_reply }}</legend>
+
+          <div class="form-group required" style="display:none;">
+
+            <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+
+            <div class="col-sm-10">
+
+              <input type="text" name="username" value="{{ customer_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" required />
+              <input type="text" name="customer_id" value="{{ customer_id }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" required />
+			  <input type="hidden" name="forum_id" value="{{ forum_id }}" />
+
+            </div>
+
+          </div>
+		  
+          <div class="form-group required" style="display:none;">
+
+            <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
+
+            <div class="col-sm-10">
+
+              <input type="email" name="email" value="{{ customer_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+              <input type="text" name="avatar" value="{{ customer_photo }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+			  
+    
+            </div>
+
+          </div>
+
+
+		  
+          <div class="form-group required">
+
+            <label class="col-sm-2 control-label" for="input-tname">{{ entry_topic_reply }}</label>
+
+            <div class="col-sm-10">
+			<textarea class="form-control" name="reply" required></textarea>              
+	
+            </div>
+
+          </div>
+
+	</fieldset>
+  {% else %}
+          <div class="buttons clearfix">
+
+
+          <div class="pull-right">
+
+            <a href="{{ login_url }}" class="btn btn-primary">Login to Reply</a>
+
+          </div>
+
+        </div>
+  {% endif %}
+
+  
+  {% if customer_id %}
+        <div class="buttons clearfix">
+
+
+          <div class="pull-right">
+
+            <input type="submit" value="Post Reply" class="btn btn-primary" />
+
+          </div>
+
+        </div>
+  {% endif %}
+  </form>
+
+          </div>
+
+      </div>
+
+    </div>
+
+  </div>
+      {{ content_bottom }}</div>
+    {{ column_right }}
+</div>
+
+{{ footer }}  

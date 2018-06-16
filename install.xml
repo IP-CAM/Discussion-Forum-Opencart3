@@ -1,0 +1,131 @@
+<modification>
+    <name>Add Forum Link in Admin and Frontend</name>
+	<version>1.0</version>
+	<link>https://www.synapseindia.com/</link>
+	<author>SynapseIndia</author>
+	<code>simple_discussion_forum</code>
+
+	<file path="admin/controller/common/column_left.php">
+		<operation>
+			<search ><![CDATA[$design = array();]]></search>
+			<add position="after"><![CDATA[$design[] = array(
+
+					'name'	   => 'Forums',
+
+					'href'     => $this->url->link('design/forum', 'user_token=' . $this->session->data['user_token'], true),
+
+					'children' => array()		
+
+				);
+			$design[] = array(
+
+					'name'	   => 'Forums Reply',
+
+					'href'     => $this->url->link('design/forum/getForumReply', 'user_token=' . $this->session->data['user_token'], true),
+
+					'children' => array()		
+
+				);]]></add>
+		</operation>
+
+	</file>
+	<file path="admin/controller/marketplace/install.php">
+		<operation>
+			<search ><![CDATA[$allowed = array(
+
+					'admin/controller/extension/',
+
+					'admin/language/',
+
+					'admin/model/extension/',
+
+					'admin/view/image/',
+
+					'admin/view/javascript/',
+
+					'admin/view/stylesheet/',
+
+					'admin/view/template/extension/',
+
+					'catalog/controller/extension/',
+
+					'catalog/language/',
+
+					'catalog/model/extension/',
+
+					'catalog/view/javascript/',
+
+					'catalog/view/theme/',
+
+					'system/config/',
+
+					'system/library/',
+
+					'image/catalog/'
+
+				);]]></search>
+			<add position="replace"><![CDATA[$allowed = array(
+
+					'admin/controller/extension/',
+					'admin/controller/design/',
+
+					'admin/language/',
+
+					'admin/model/extension/',
+					'admin/model/design/',
+
+					'admin/view/image/',
+
+					'admin/view/javascript/',
+
+					'admin/view/stylesheet/',
+
+					'admin/view/template/design/',
+					'admin/view/template/extension/',
+
+					'catalog/controller/extension/',
+
+					'catalog/language/',
+
+					'catalog/model/extension/',
+					'catalog/model/design/',
+
+					'catalog/view/javascript/',
+
+					'catalog/view/theme/',
+
+					'system/config/',
+
+					'system/library/',
+
+					'image/catalog/'
+
+				);]]></add>
+		</operation>
+
+	</file>	
+
+	<file path="catalog/controller/common/footer.php">
+		<operation>
+			<search><![CDATA[$data['contact'] = $this->url->link('information/contact');]]></search>
+			<add position="after"><![CDATA[$data['forum_link'] = $this->url->link('extension/module/forum/getForums');]]></add>
+		</operation>
+
+	</file>	
+
+	<file path="catalog/language/en-gb/common/footer.php">
+		<operation>
+			<search ><![CDATA[$_['text_contact']      = 'Contact Us';]]></search>
+			<add position="after"><![CDATA[$_['text_forum']      = 'Forum';]]></add>
+		</operation>
+	</file>	
+
+	<file path="catalog/view/theme/*/template/common/footer.twig">
+		<operation>
+			<search ><![CDATA[<li><a href="{{ contact }}">{{ text_contact }}</a></li>]]></search>
+			<add position="before"><![CDATA[<li><a href="{{ forum_link }}">{{ text_forum }}</a></li>]]></add>
+		</operation>
+
+	</file>	
+
+</modification>
